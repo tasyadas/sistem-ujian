@@ -23,7 +23,7 @@ class CreateSoalsTable extends Migration
             $table->string('D');
             $table->string('E')->nullable();
             $table->string('kunci');
-            $table->integer('cluster_id')->unsigned()->unique();
+            $table->integer('cluster_id')->unsigned();
             $table->foreign('cluster_id')->references('id')->on('clusters')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

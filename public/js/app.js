@@ -133,6 +133,7 @@ $('body').on('click', '.btn-import', function (event) {
         title = me.attr('title');
 
     $('#modal-title').text(title);
+    // $('#modal-btn-save').hide();
     $('#modal-btn-save').removeClass('hide')
     .text('Import');
 

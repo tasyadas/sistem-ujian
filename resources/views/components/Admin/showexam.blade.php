@@ -1,54 +1,25 @@
-<div id="ExamModal" @yield('data-parent') data-parent="#accordion" class="collapse show">
-    <div class="card-body" id="accordion1" @section('id', 'accordion1')>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Cluster List
-                  <a href="/admin/cluster/create" data-toggle="collapse" data-target="#ExamCreate" aria-expanded="true" aria-controls="ExamCreate" class="btn btn-success pull-right modal-show" style="margin-top: -8px;"><i class="icon-plus"></i> Create</a>
-              </h3>
-            </div>
-            <div class="panel-body">
-                <table id="datatable" class="table table-hover" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Cluster</th>
-                            <th>Location</th>
-                            <th>Assessor Name</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                          
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                          <th>No</th>
-                          <th>Cluster</th>
-                          <th>Location</th>
-                          <th>Assessor Name</th>
-                          <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+@extends('layouts.master')
+
+@section('title','admin')
+
+@section('content')
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+        <h3 class="panel-title">Exam List</h3>
         </div>
-                
-        @push('scripts')
-            <script>
-                $('#datatable').DataTable({
-                    responsive: true,
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('cluster.view') }}",
-                    columns: [
-                        {data: 'DT_RowIndex', name: 'id'},
-                        {data: 'cluster', name: 'cluster'},
-                        {data: 'lokasi', name: 'lokasi'},
-                        {data: 'asesor_name', name: 'asesor_name'},
-                        {data: 'action', name: 'action'}
-                    ]
-                });
-            </script>
-        @endpush
-    </div>
-</div>
+        <div class="panel-body">
+            <table id="datatable" style="width:100%">
+                <tbody>
+                    @for ($i = 0; $i < count($model); $i++)
+                        <tr>{{$model->soal}}</tr>
+                        <li>{{$model->A}}</li>
+                        <li>{{$model->B}}</li>
+                        <li>{{$model->C}}</li>
+                        <li>{{$model->D}}</li>
+                        <li>{{$model->E}}</li>
+                    @endfor
+                </tbody>
+            </table>
+        </div>
+    </div>    
+@endsection

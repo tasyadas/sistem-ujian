@@ -17,12 +17,19 @@ class ClusterController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public static function GetCluster($id)
+    public static function GetSoal($id)
     {
-        $model = Cluster::findOrFail($id);
-
+        $model = Soal::where('cluster_id', $id)->get();
+        
         return view('components.Admin.detail', compact('model'));
     }
+
+    // public static function GetCluster($id)
+    // {
+    //     $model = Cluster::findOrFail($id);
+
+    //     return view('components.Admin.detail', compact('model'));
+    // }
 
     public function Create()
     {
@@ -51,8 +58,6 @@ class ClusterController extends Controller
             'created_at' => Carbon::now('Asia/Jakarta'),
             'updated_at' => Carbon::now('Asia/Jakarta')
         ]);
-
-        return $cluster;
     }
 
     public function Edit($id)
@@ -91,12 +96,12 @@ class ClusterController extends Controller
     {
 
         //VALIDASI
-        // $this->validate($request, [
-        //     'file' => 'required|mimes:xls,xlsx',
-        // ]);
+        $this->validate($request, [
+            'files' => 'required|mimes:xls,xlsx',
+        ]);
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file'); //Get File
+        if ($request->hasFile('files')) {
+            $file = $request->file('files'); //Get File
             $collection = (new FastExcel)->import($file, function ($line) use ($id) {
                 return Soal::create([
                     'soal' => $line['Soal'],
@@ -110,8 +115,8 @@ class ClusterController extends Controller
                     'cluster_id' => $id
                 ]); //Import File
             }); 
-        
-                return redirect()->back();            
+        return redirect()->back();
+
         }
     }
     
@@ -131,7 +136,7 @@ class ClusterController extends Controller
                 return view('components.Admin._action', [
                     'model' => $model,
                     'url_import' => route('cluster.soal.create', $model->id),
-                    'url_show' => route('cluster.get', $model->id),
+                    'url_show' => route('soal.view', $model->id),
                     'url_edit' => route('cluster.edit', $model->id),
                     'url_destroy' => route('cluster.delete', $model->id)
                 ]);

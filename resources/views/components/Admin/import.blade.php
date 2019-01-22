@@ -1,14 +1,15 @@
-<form action="/cluster/soal/store/{{$model->id}}" method="post" enctype="multipart/form-data">
-    @csrf
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Cluster</span>
-        </div>
-    <input type="text" class="form-control" name="cluster" autocomplete="off" value="{{$model->cluster}}">
+{!! Form::model($model, [
+    'route' => $model->exists ? ['cluster.soal.store', $model->id] : 'cluster.soal.create',
+    'method' => $model->exists ? 'POST' : 'POST',
+    'files' => true
+]) !!}
+    <div class="form-group">
+        <label for="" class="control-label">Cluster</label>
+        {!! Form::text('cluster', null, ['class' => 'form-control', 'id' => 'cluster']) !!}
     </div>
-    <div class="input-group mb-3">
-        <label>File .xlsx</label>
-        <input type="file" class="form-control-file" id="file" name="files">
+    <div class="form-group">
+        <label for="" class="control-label">File .xlsx</label>
+        {!! Form::file('files', ['id' => 'files']) !!}
     </div>
-    <button type="submit" class="btn btn-primary text-right">Import</button>
-</form>
+    {!! Form::submit('Import',['class' => 'btn btn-primary']) !!}
+{!! Form::close() !!}

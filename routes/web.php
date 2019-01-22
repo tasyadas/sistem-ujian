@@ -24,7 +24,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/logout', 'AuthAdmin\LoginController@logout')->name('admin.logout');
     Route::get('/password/reset', 'AuthAdmin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
     Route::get('/password/email', 'AuthAdmin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-    Route::get('/cluster/get/{id}', 'ClusterController@GetCluster')->name('cluster.get');
+    // Route::get('/cluster/get/{id}', 'ClusterController@GetCluster')->name('cluster.get');
     Route::get('/cluster/edit/{id}', 'ClusterController@Edit')->name('cluster.edit');
     Route::post('/cluster/update/{id}', 'ClusterController@Update')->name('cluster.update');
     Route::get('/cluster/view', 'ClusterController@dataTable')->name('cluster.view');
@@ -33,5 +33,5 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/cluster/store', 'ClusterController@store')->name('cluster.store');
     Route::get('/cluster/soal/create/{id}', 'ClusterController@Import')->name('cluster.soal.create');
     Route::post('/cluster/soal/store/{id}', 'ClusterController@StoreImport')->name('cluster.soal.store');
-    Route::get('/soal/view', 'SoalController@dataTable')->name('soal.view');
+    Route::get('/soal/view/{id}', 'ClusterController@GetSoal')->name('soal.view');
 });
