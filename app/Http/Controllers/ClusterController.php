@@ -12,24 +12,13 @@ use Yajra\DataTables\DataTables;
 
 class ClusterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
+    
     public static function GetSoal($id)
     {
         $model = Soal::where('cluster_id', $id)->get();
         
         return view('components.Admin.detail', compact('model'));
     }
-
-    // public static function GetCluster($id)
-    // {
-    //     $model = Cluster::findOrFail($id);
-
-    //     return view('components.Admin.detail', compact('model'));
-    // }
 
     public function Create()
     {
@@ -139,6 +128,21 @@ class ClusterController extends Controller
                     'url_show' => route('soal.view', $model->id),
                     'url_edit' => route('cluster.edit', $model->id),
                     'url_destroy' => route('cluster.delete', $model->id)
+                ]);
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function dataTableUser()
+    {
+        $model = Cluster::query();
+        return DataTables::of($model)
+            ->addColumn('action', function($model) {
+                return view('components.User._action', [
+                    'model' => $model,
+                    'url_show' => route('user.soal.view', $model->id),
                 ]);
             })
             ->addIndexColumn()

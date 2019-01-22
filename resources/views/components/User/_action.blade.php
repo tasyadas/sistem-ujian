@@ -1,0 +1,1 @@
+| <a href="{{ $url_show }}" class="btn-show" title="Detail {{ $model->cluster }}"><i class="icon-play-sign text-primary" > Start Exam</i></a> | 

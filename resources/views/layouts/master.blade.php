@@ -51,45 +51,45 @@
           <a class="navbar-brand" href="#">Dashboard</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          
-            <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav">
+            @if(Auth::guard('admin')->check())
               <li class="active"><a href="{{ url('/cluster/view') }}">Cluster</a></li>
-              <li class="active"><a href="{{ url('/cluster/view') }}">Exam Questions</a></li>
               <li class=""><a href="{{ url('') }}">Score List</a></li>
-            </ul>
-          
-          
-            <ul class="nav navbar-nav navbar-right">
-              <!-- Authentication Links -->
-              @guest
-              <li class="nav-item ">
-                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-              </li>
-              @if (Route::has('register'))
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                  </li>
-              @endif
-              @else
-              <li class="nav-item dropdown">
-                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                      {{ Auth::user()->name }} <span class="caret"></span>
-                  </a>
-
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ route('logout') }}"
-                         onclick="event.preventDefault();
-                                       document.getElementById('logout-form').submit();">
-                          {{ __('Logout') }}
-                      </a>
-
-                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                          @csrf
-                      </form>
-                  </div>
-              </li>
-              @endguest
-            </ul>
+            @else
+              <li class="active"><a href="{{ url('/cluster/view') }}">Cluster</a></li>
+            @endif
+          </ul>
+        
+        
+          <ul class="nav navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @guest
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @if (Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+            @endif
+            @else
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+            @endguest
+          </ul>
           
         </div><!--/.nav-collapse -->
       </div>
@@ -102,6 +102,7 @@
     </div> <!-- /container -->
 
     @include('components.Admin._modal')
+    @include('components.User._modal')
 
 
     <!-- Bootstrap core JavaScript

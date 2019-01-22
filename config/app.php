@@ -168,6 +168,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        jpmurray\LaravelCountdown\CountdownServiceProvider::class,
 
 
         /*
@@ -232,6 +233,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'FastExcel' => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
+        'Countdown' => jpmurray\LaravelCountdown\Facades\CountdownFacade::class,
     ],
 
 ];
