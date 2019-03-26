@@ -14,8 +14,9 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/cluster/view', 'ClusterController@dataTableUser')->name('user.cluster.view');
-Route::get('/soal/view/{id}', 'ClusterController@GetSoal')->name('user.soal.view');
+Route::get('/cluster/view', 'ClusterController@dataTableUser')->name('user.cluster.view'); //JSON view
+Route::get('/soal/view/{id}', 'ClusterController@GetUserSoal')->name('user.soal.view');
+Route::post('/jawaban/store/{id}', 'ClusterController@GetUserJawaban')->name('user.jawaban.store');
 Route::get('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
 
 
@@ -28,7 +29,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/password/email', 'AuthAdmin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
     Route::get('/cluster/edit/{id}', 'ClusterController@Edit')->name('cluster.edit');
     Route::post('/cluster/update/{id}', 'ClusterController@Update')->name('cluster.update');
-    Route::get('/cluster/view', 'ClusterController@dataTable')->name('cluster.view');
+    Route::get('/cluster/view', 'ClusterController@dataTable')->name('cluster.view'); //JSON view
     Route::get('/cluster/delete/{id}', 'ClusterController@Delete')->name('cluster.delete');
     Route::get('/cluster/create', 'ClusterController@Create')->name('cluster.create');
     Route::post('/cluster/store', 'ClusterController@store')->name('cluster.store');

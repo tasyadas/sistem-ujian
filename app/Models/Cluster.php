@@ -16,7 +16,7 @@ class Cluster extends Model
         'updated_at'
     ];
 
-    public function cluster()
+    public function soal()
     {
         return $this->hasMany("App\Models\Soal");
     }

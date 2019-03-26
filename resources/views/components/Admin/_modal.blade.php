@@ -12,6 +12,7 @@
             <div class="modal-footer" id="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="modal-btn-save"></button>
+                <button type="button" class="btn btn-primary" id="btn-save-import"></button>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 {!! Form::model($model, [
     'route' => $model->exists ? ['cluster.soal.store', $model->id] : 'cluster.soal.create',
-    'method' => $model->exists ? 'POST' : 'POST',
+    'method' => $model->exists ? 'POST' : 'GET',
     'files' => true
 ]) !!}
     <div class="form-group">
@@ -11,5 +11,5 @@
         <label for="" class="control-label">File .xlsx</label>
         {!! Form::file('files', ['id' => 'files']) !!}
     </div>
-    {!! Form::submit('Import',['class' => 'btn btn-primary']) !!}
+    {{-- {!! Form::submit('Import',['class' => 'btn btn-primary', 'id' => 'btn-save-import']) !!} --}}
 {!! Form::close() !!}

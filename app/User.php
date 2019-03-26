@@ -16,12 +16,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'email', 
+        'password'
     ];
 
-    public function jawaban(){
-        return $this->hasMany("App\Models\Jawaban");
+    public function soal(){
+        return $this->belongsToMany("App\Models\Soal")->withPivot('jawaban')->withTimestamps();;
     }
+
 
     /**
      * The attributes that should be hidden for arrays.

@@ -27,8 +27,8 @@ class Soal extends Model
         return $this->belongsTo("App\Models\Cluster");
     }
 
-    public function jawaban()
+    public function user()
     {
-        return $this->belongsToMany("App\Models\Jawaban");        
+        return $this->belongsToMany("App\User")->withPivot('jawaban')->withTimestamps();       
     }
 }

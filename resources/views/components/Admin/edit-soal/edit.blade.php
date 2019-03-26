@@ -1,0 +1,1 @@
+<a href="{{ $url_edit }}" class="modal-show edit" title="Edit {{ $model->cluster }}"><i class="icon-pencil text-inverse"></i></a> | 

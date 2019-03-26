@@ -15,6 +15,7 @@
                         <li>{{$model[$i]->D}}</li>
                         <li>{{$model[$i]->E}}</li>
                     </ul>
+                    {{-- <a href="{{ $url_edit }}" class="modal-show edit" title="Edit {{ $model->cluster }}"><i class="icon-pencil text-inverse"></i></a> | Edit --}}
                 @endfor
             </tbody>
         </table>

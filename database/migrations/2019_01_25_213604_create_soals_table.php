@@ -15,7 +15,7 @@ class CreateSoalsTable extends Migration
     {
         Schema::create('soals', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('soal');
+            $table->longText('soal');
             $table->string('image')->nullable();
             $table->string('A');
             $table->string('B');

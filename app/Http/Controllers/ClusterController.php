@@ -8,6 +8,8 @@ use App\Models\Soal;
 use Carbon\Carbon;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\DataTables;
+use DB;
+
 
 
 class ClusterController extends Controller
@@ -19,6 +21,42 @@ class ClusterController extends Controller
         
         return view('components.Admin.detail', compact('model'));
     }
+
+    public static function GetUserSoal($id)
+    {
+        $model = Soal::where('cluster_id', $id)->inRandomOrder()->limit(500)->get();
+        
+        return view('components.User.showexam', compact('model'));
+    }
+
+    public function GetUserJawaban($id, Request $request)
+    {   
+        $sumsoal = Soal::findOrFail($id)->count();
+        $score = 0;
+        foreach($request->jawaban as $key => $value){
+            $soal = Soal::find($key);
+            $kunci = $soal->kunci;
+            // $user_id=\Auth::user()->id;
+            // if($value !=null){
+            //     $soal->user()->sync([$user_id => [
+            //         'jawaban' => $value
+            //     ]]);
+            // }
+
+            $user_id=\Auth::user()->id;
+            $soal_id= $soal->id;
+            if($value !=null){
+                $nilai = array('user_id' => $user_id,'soal_id' => $soal_id, 'jawaban' => $value);
+                DB::table('soal_user')->insert($nilai);
+            }
+
+            if($value === $kunci){
+                $score+=1;
+            }
+        }
+        echo $hasil = ( $score/$sumsoal) * 100;
+    }
+
 
     public function Create()
     {
@@ -40,7 +78,7 @@ class ClusterController extends Controller
         $time = '_'.$now->format('Y-m-d').'_'.$now->micro;
         $cluster_name = $request->cluster.$time;
 
-        $cluster = Cluster::create([
+        Cluster::create([
             'cluster' => $cluster_name,
             'lokasi' => $request->lokasi,
             'asesor_name' => $request->asesor_name,
@@ -49,29 +87,29 @@ class ClusterController extends Controller
         ]);
     }
 
-    public function Edit($id)
-    {
-        $model = Cluster::findOrFail($id);
-        return view('components.Admin.form', compact('model'));
-    }
+    // public function Edit($id)
+    // {
+    //     $model = Cluster::findOrFail($id);
+    //     return view('components.Admin.form', compact('model'));
+    // }
 
-    public function Update($id, Request $request)
-    {
-        //VALIDASI
-        $this->validate($request, [
-            'cluster' => 'required|string|max:255',
-            'asesor_name' => 'required|string|max:255',
-        ]);
+    // public function Update($id, Request $request)
+    // {
+    //     //VALIDASI
+    //     $this->validate($request, [
+    //         'cluster' => 'required|string|max:255',
+    //         'asesor_name' => 'required|string|max:255',
+    //     ]);
 
-        $cluster = Cluster::findOrFail($id);
-        $cluster->cluster = $request->cluster;
-        $cluster->asesor_name = $request->asesor_name;
-        $cluster->updated_at = Carbon::now('Asia/Jakarta');
-        $cluster->save();
+    //     $cluster = Cluster::findOrFail($id);
+    //     $cluster->cluster = $request->cluster;
+    //     $cluster->asesor_name = $request->asesor_name;
+    //     $cluster->updated_at = Carbon::now('Asia/Jakarta');
+    //     $cluster->save();
 
-        return redirect()->back();
+    //     return redirect()->back();
 
-    }
+    // }
 
     public function Import($id)
     {
@@ -126,7 +164,6 @@ class ClusterController extends Controller
                     'model' => $model,
                     'url_import' => route('cluster.soal.create', $model->id),
                     'url_show' => route('soal.view', $model->id),
-                    'url_edit' => route('cluster.edit', $model->id),
                     'url_destroy' => route('cluster.delete', $model->id)
                 ]);
             })
@@ -134,7 +171,7 @@ class ClusterController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-
+    
     public function dataTableUser()
     {
         $model = Cluster::query();
@@ -142,11 +179,12 @@ class ClusterController extends Controller
             ->addColumn('action', function($model) {
                 return view('components.User._action', [
                     'model' => $model,
-                    'url_show' => route('user.soal.view', $model->id),
+                    'url_show' => route('user.soal.view', $model->id)
                 ]);
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
     }
+
 }
